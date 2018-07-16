@@ -51,13 +51,21 @@ class DraggableCard extends Component {
   panend (ev) {
     const screen = this.props.containerSize
     const card = ReactDOM.findDOMNode(this)
+    const swipeOffsetX = 200
+    const swipeOffsetY = 200
 
     const getDirection = () => {
       switch (true) {
-        case (this.state.x < -50): return 'Left'
-        case (this.state.x + (card.offsetWidth - 50) > screen.x): return 'Right'
-        case (this.state.y < -50): return 'Top'
-        case (this.state.y + (card.offsetHeight - 50) > screen.y): return 'Bottom'
+        console.log('data', this.state.initialPosition, this.state.x, this.state.y);
+        case (( this.state.initialPosition.y - swipeOffsetY ) > this.state.y): return 'Top'
+
+        case (( this.state.initialPosition.x + swipeOffsetX + card.offsetWidth ) < this.state.x): return 'Right'
+        case (( this.state.initialPosition.x - swipeOffsetX ) > this.state.x): return 'Left'
+        
+        // 
+        //case (((this.state.initialPosition.x) + card.offsetWidth - swipeOffsetX) > this.state.x): return 'Right'
+        //case (this.state.y < -50): return 'Top'
+        //case (this.state.y + (card.offsetHeight - 50) > screen.y): return 'Bottom'
         default: return false
       }
     }
